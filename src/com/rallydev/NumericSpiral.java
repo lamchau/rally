@@ -22,7 +22,7 @@ public class NumericSpiral {
 
   public static void main(String[] args) {
     // for (int i = 1; i < 101; i+= 10) {
-    System.out.println(new NumericSpiral(110));
+    System.out.println(new NumericSpiral(110).render());
     // System.out.println();
     // }
   }
@@ -102,7 +102,25 @@ public class NumericSpiral {
   }
 
   @Override
-  public String toString() {
+  public boolean equals(Object obj) {
+    if (obj == this) {
+      return true;
+    }
+
+    if (obj == null || obj.getClass() != this.getClass()) {
+      return false;
+    }
+
+    NumericSpiral other = (NumericSpiral) obj;
+    return this.target == other.target;
+  }
+
+  @Override
+  public int hashCode() {
+    return this.target;
+  }
+
+  public String render() {
     if (this.display == null) {
       final StringBuilder sb = new StringBuilder();
       for (int i = 0; i < grid.length; i++) {
