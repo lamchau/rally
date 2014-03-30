@@ -50,17 +50,6 @@ public class NumericSpiral {
     return size;
   }
 
-  /**
-   * Creates the left-padded number renderer. For use with {@code String.format}.
-   *
-   * @param grid the renderer for
-   * @return the cell formatter
-   */
-  static String createCellRenderer(int maxValue) {
-    int padding = String.valueOf(maxValue).length();
-    return "%1$" + padding + "s";
-  }
-
   static void initialize(int[][] grid, int defaultValue) {
     if (grid == null) {
       return;
