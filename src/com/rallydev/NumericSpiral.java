@@ -14,6 +14,10 @@ public class NumericSpiral {
 
   private static final int MIN_GRID_SIZE = 3;
   private static final int EMPTY_GRID_VALUE = -1;
+  // expose at package level for testing
+  static final int MIN_GRID_SIZE = 3;
+  static final int EMPTY_CELL_VALUE = -1;
+  static final String EMPTY_CELL_RENDERER = "-";
   private static final String NEWLINE = System.getProperty("line.separator");
 
   public static void main(String[] args) {
@@ -21,6 +25,17 @@ public class NumericSpiral {
     System.out.println(new NumericSpiral(110));
     // System.out.println();
     // }
+  }
+
+  /**
+   * Creates the left-padded number renderer. For use with {@code String.format}.
+   *
+   * @param grid the renderer for
+   * @return the cell formatter
+   */
+  static String createCellRenderer(int maxValue) {
+    int padding = String.valueOf(maxValue).length();
+    return "%1$" + padding + "s";
   }
 
   /**
@@ -82,7 +97,7 @@ public class NumericSpiral {
     this.cellRenderer = createCellRenderer(target);
     this.target = target;
 
-    initialize(this.grid, EMPTY_GRID_VALUE);
+    initialize(this.grid, EMPTY_CELL_VALUE);
     populate();
   }
 
@@ -96,7 +111,8 @@ public class NumericSpiral {
             sb.append(" ");
           }
           int value = grid[i][j];
-          sb.append(String.format(cellRenderer, value == EMPTY_GRID_VALUE ? "-" : value));
+          sb.append(String.format(cellRenderer,
+              value == EMPTY_CELL_VALUE ? EMPTY_CELL_RENDERER : value));
         }
         sb.append(NEWLINE);
       }
