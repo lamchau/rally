@@ -1,19 +1,7 @@
 package com.rallydev;
 
 public class NumericSpiral {
-  protected enum Direction {
-    RIGHT, DOWN, LEFT, UP;
 
-    // cache directions
-    private static final Direction[] VALUES = values();
-
-    public static Direction getDirection(int ordinal) {
-      return VALUES[ordinal % VALUES.length];
-    }
-  }
-
-  private static final int MIN_GRID_SIZE = 3;
-  private static final int EMPTY_GRID_VALUE = -1;
   // expose at package level for testing
   static final int MIN_GRID_SIZE = 3;
   static final int EMPTY_CELL_VALUE = -1;
