@@ -1,8 +1,5 @@
 package com.rallydev;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class NumericSpiral {
   protected enum Direction {
     RIGHT, DOWN, LEFT, UP;
@@ -24,15 +21,6 @@ public class NumericSpiral {
     System.out.println(new NumericSpiral(110));
     // System.out.println();
     // }
-
-  }
-
-  static List<Integer> as(int[] array) {
-    List<Integer> list = new ArrayList<Integer>(array.length);
-    for (int i = 0; i < array.length; i++) {
-      list.add(array[i]);
-    }
-    return list;
   }
 
   /**
@@ -85,7 +73,6 @@ public class NumericSpiral {
   private final int[][] grid;
   private final String cellRenderer;
   private final int target;
-
   private String display;
 
   public NumericSpiral(int target) {
@@ -101,19 +88,21 @@ public class NumericSpiral {
 
   @Override
   public String toString() {
-    final StringBuilder sb = new StringBuilder();
-    for (int i = 0; i < grid.length; i++) {
-      for (int j = 0; j < grid[i].length; j++) {
-        if (j > 0) {
-          sb.append(" ");
+    if (this.display == null) {
+      final StringBuilder sb = new StringBuilder();
+      for (int i = 0; i < grid.length; i++) {
+        for (int j = 0; j < grid[i].length; j++) {
+          if (j > 0) {
+            sb.append(" ");
+          }
+          int value = grid[i][j];
+          sb.append(String.format(cellRenderer, value == EMPTY_GRID_VALUE ? "-" : value));
         }
-        int value = grid[i][j];
-        sb.append(String.format(cellRenderer, value == EMPTY_GRID_VALUE ? "-" : value));
-
+        sb.append(NEWLINE);
       }
-      sb.append(NEWLINE);
+      this.display = sb.toString();
     }
-    return sb.toString();
+    return this.display;
   }
 
   private void populate() {
