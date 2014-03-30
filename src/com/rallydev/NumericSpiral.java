@@ -20,10 +20,10 @@ public class NumericSpiral {
   private static final String NEWLINE = System.getProperty("line.separator");
 
   public static void main(String[] args) {
-    for (int i = 0; i < 1000; i++) {
-      System.out.println(new NumericSpiral(i));
-      System.out.println();
-    }
+    // for (int i = 1; i < 101; i+= 10) {
+    System.out.println(new NumericSpiral(110));
+    // System.out.println();
+    // }
 
   }
 
@@ -121,47 +121,34 @@ public class NumericSpiral {
     int x = center;
     int y = center + 1;
     int[] position = {1, 1, 2, 2};
-    Direction direction;
 
-    int counter = 1;
     int layer = 0;
 
     grid[center][center] = 0;
-    while (counter <= this.target) {
-      direction = Direction.RIGHT;
-      int c = position[direction.ordinal()];
-      for (int i = 0; i < c; i++) {
+
+    for (int counter = 1; counter < this.target; counter++) {
+      Direction direction = Direction.RIGHT;
+      int steps = position[direction.ordinal()];
+      for (int i = 0; i < steps; i++) {
         grid[x - layer][y + i - layer] = counter++;
-        if (counter > this.target) {
-          return;
-        }
       }
 
       direction = Direction.DOWN;
-      c = position[direction.ordinal()];
-      for (int i = 0; i < c; i++) {
+      steps = position[direction.ordinal()];
+      for (int i = 0; i < steps; i++) {
         grid[y + i - layer][x + layer + 1] = counter++;
-        if (counter > this.target) {
-          return;
-        }
       }
 
       direction = Direction.LEFT;
-      c = position[direction.ordinal()];
-      for (int i = 0; i < c; i++) {
+      steps = position[direction.ordinal()];
+      for (int i = 0; i < steps; i++) {
         grid[x + layer + 1][y - i + layer - 1] = counter++;
-        if (counter > this.target) {
-          return;
-        }
       }
 
       direction = Direction.UP;
-      c = position[direction.ordinal()];
-      for (int i = 0; i < c; i++) {
+      steps = position[direction.ordinal()];
+      for (int i = 0; i < steps; i++) {
         grid[y - i + layer - 1][x - layer - 1] = counter++;
-        if (counter > this.target) {
-          return;
-        }
       }
 
       for (int i = 0; i < position.length; i++) {
