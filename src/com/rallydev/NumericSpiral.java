@@ -5,6 +5,7 @@ package com.rallydev;
  * direction).
  *
  * Example (input: 20)
+ *
  * <pre>
  * 20  -  -  -  -
  * 19  6  7  8  9
@@ -52,6 +53,11 @@ public class NumericSpiral {
   private final int target;
   private String display;
 
+  /**
+   * Constructor for a <code>NumericSpiral</code>
+   *
+   * @param target the target integer
+   */
   public NumericSpiral(int target) {
     final int size = GridHelper.determineGridSize(target);
 
@@ -97,6 +103,9 @@ public class NumericSpiral {
     return this.display;
   }
 
+  /**
+   * Populates the grid with values.
+   */
   private void populate() {
     final int center = (int) Math.floor(this.grid.length / 2);
     int x = center;
