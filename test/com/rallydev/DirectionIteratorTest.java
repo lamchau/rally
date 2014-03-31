@@ -8,6 +8,7 @@ import java.util.ListIterator;
 import org.junit.Before;
 import org.junit.Test;
 
+// TODO: remove
 public class DirectionIteratorTest {
 
   private ListIterator<Direction> iterator;
