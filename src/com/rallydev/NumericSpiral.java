@@ -41,11 +41,14 @@ public class NumericSpiral {
   protected static final String EMPTY_CELL_RENDERER = "-";
 
   public static void main(String[] args) {
-    for (int i = 50; i < 51; i++) {
-//      System.out.println("i: " + i);
-      System.out.println(new NumericSpiral(i).render());
-//      System.out.println();
-    }
+//    -  -  -  -  -  -  -
+//    - 20 21 22 23 24 25
+//    - 19  6  7  8  9 26
+//    - 18  5  0  1 10 27
+//    - 17  4  3  2 11  -
+//    - 16 15 14 13 12  -
+//    -  -  -  -  -  -  -
+    System.out.println(new NumericSpiral(27).render());
   }
 
   private final int[][] grid;
@@ -107,44 +110,39 @@ public class NumericSpiral {
    * Populates the grid with values.
    */
   private void populate() {
-    final int center = (int) Math.floor(this.grid.length / 2);
-    int x = center;
-    int y = center + 1;
-    int[] position = {1, 1, 2, 2};
+    final int center = (int) Math.floor(grid.length / 2);
 
-    int layer = 0;
+    // direction
+    final Point p = new Point(center, center);
+    Direction direction = Direction.RIGHT;
 
-    grid[center][center] = 0;
+    // track drawing width/height steps
+    int remainder = 1;
+    int position = 0;
 
-    for (int counter = 1; counter < this.target; counter++) {
-      Direction direction = Direction.RIGHT;
-      int steps = position[direction.ordinal()];
-      for (int i = 0; i < steps; i++) {
-        grid[x - layer][y + i - layer] = counter++;
+    for (int i = 0; i <= target; i++) {
+      assert p.getX() < grid.length;
+      assert p.getY() < grid.length;
+
+      grid[p.getX()][p.getY()] = i;
+
+      if (position < remainder) {
+        position++;
+      } else {
+        // reset 'pen'
+        position = 1;
+
+        // corners at which the layers 'grow'
+        if (direction == Direction.DOWN || direction == Direction.UP) {
+          remainder++;
+        }
+
+        // update direction
+        direction = direction.next();
       }
 
-      direction = Direction.DOWN;
-      steps = position[direction.ordinal()];
-      for (int i = 0; i < steps; i++) {
-        grid[y + i - layer][x + layer + 1] = counter++;
-      }
-
-      direction = Direction.LEFT;
-      steps = position[direction.ordinal()];
-      for (int i = 0; i < steps; i++) {
-        grid[x + layer + 1][y - i + layer - 1] = counter++;
-      }
-
-      direction = Direction.UP;
-      steps = position[direction.ordinal()];
-      for (int i = 0; i < steps; i++) {
-        grid[y - i + layer - 1][x - layer - 1] = counter++;
-      }
-
-      for (int i = 0; i < position.length; i++) {
-        position[i] += 2;
-      }
-      layer++;
+      // update point for next 'stroke'
+      p.move(direction);
     }
   }
 }
