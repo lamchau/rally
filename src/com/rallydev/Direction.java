@@ -11,7 +11,7 @@ public enum Direction {
   /**
    * Convenience class for traversing relative directions forwards/backwards.
    */
-  static final class DirectionIterator implements ListIterator<Direction> {
+  private static class DirectionIterator implements ListIterator<Direction> {
     private final Direction[] values = values();
     private int currentIndex = Direction.UP.ordinal();
 

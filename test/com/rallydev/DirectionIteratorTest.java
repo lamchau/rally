@@ -14,7 +14,7 @@ public class DirectionIteratorTest {
 
   @Before
   public void setUp() throws Exception {
-    iterator = new Direction.DirectionIterator();
+    iterator = Direction.createIterator();
   }
 
   @Test(expected = UnsupportedOperationException.class)
@@ -29,7 +29,7 @@ public class DirectionIteratorTest {
       assertTrue(iterator.hasNext());
     }
   }
-//
+
   @Test
   public void testHasPrevious() {
     for (int i = 0; i < (Direction.SIZE * 2); i++) {
@@ -37,7 +37,7 @@ public class DirectionIteratorTest {
       assertTrue(iterator.hasPrevious());
     }
   }
-//
+
   @Test
   public void testNext() {
     Direction[] expected = {
@@ -52,7 +52,7 @@ public class DirectionIteratorTest {
       assertEquals(iterator.next(), d);
     }
   }
-//
+
   @Test
   public void testNextIndex() {
     int currentIndex = iterator.nextIndex();
