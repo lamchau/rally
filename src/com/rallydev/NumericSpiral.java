@@ -57,11 +57,27 @@ public class NumericSpiral {
   private String display;
 
   /**
-   * Constructor for a <code>NumericSpiral</code>
+   * Constructor for a <code>NumericSpiral</code>. Default starting direction
+   * {@code Direction#RIGHT} -- moving clockwise.
    *
    * @param target the target integer
    */
   public NumericSpiral(int target) {
+    this(target, Direction.RIGHT, true);
+  }
+
+  /**
+   * Constructor for a <code>NumericSpiral</code>
+   *
+   * @param target the target integer
+   * @param startDirection the starting direction
+   * @param isClockwise <code>true</code> if the spiral moves clockwise, <code>false</code> if the
+   *          spiral should move counter clockwise
+   */
+  public NumericSpiral(int target, Direction startDirection, boolean isClockwise) {
+    if (startDirection == null) {
+      throw new IllegalArgumentException("Start direction cannot be null");
+    }
     final int size = GridHelper.determineGridSize(target);
 
     this.grid = new int[size][size];
@@ -69,7 +85,7 @@ public class NumericSpiral {
     this.target = target;
 
     GridHelper.initialize(this.grid, EMPTY_CELL_VALUE);
-    populate();
+    populate(startDirection, isClockwise);
   }
 
   @Override
@@ -108,18 +124,21 @@ public class NumericSpiral {
 
   /**
    * Populates the grid with values.
+   *
+   * @param startDirection the starting direction
+   * @param isClockwise <code>true</code> if the values should be populated clockwise,
+   *          <code>false</code> if the values should be populated counter clockwise
    */
-  private void populate() {
+  private void populate(final Direction startDirection, boolean isClockwise) {
     final int center = (int) Math.floor(grid.length / 2);
-
     // direction
     final Point p = new Point(center, center);
-    Direction direction = Direction.RIGHT;
 
     // track drawing width/height steps
     int edge = 1;
     int position = 0;
 
+    Direction direction = startDirection;
     for (int i = 0; i <= target; i++) {
       assert p.getX() < grid.length;
       assert p.getY() < grid.length;
@@ -133,16 +152,31 @@ public class NumericSpiral {
         position = 1;
 
         // corners at which the layers 'grow'
-        if (direction == Direction.DOWN || direction == Direction.UP) {
+        if (increaseEdge(startDirection, direction)) {
           edge++;
         }
 
         // update direction
-        direction = direction.next();
+        direction = isClockwise ? direction.next() : direction.previous();
       }
 
       // update point for next 'stroke'
       p.move(direction);
+    }
+  }
+
+  /**
+   * Determines whether or not the edge should increase.
+   *
+   * @param startDirection the starting direction
+   * @param currentDirection the current direction
+   * @return <code>true</code> if the edge size should increase, <code>false</code> otherwise
+   */
+  private boolean increaseEdge(Direction startDirection, Direction currentDirection) {
+    if (startDirection == Direction.LEFT || startDirection == Direction.RIGHT) {
+      return currentDirection == Direction.DOWN || currentDirection == Direction.UP;
+    } else {
+      return currentDirection == Direction.LEFT || currentDirection == Direction.RIGHT;
     }
   }
 }
