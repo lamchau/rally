@@ -93,7 +93,7 @@ public class DirectionIteratorTest {
   @Test
   public void testSet() {
     iterator.set(Direction.DOWN);
-    iterator.next(); // Direction.LEFT
+    assertEquals(iterator.next(), Direction.LEFT);
     assertEquals(iterator.nextIndex(), Direction.UP.ordinal());
   }
 }
