@@ -9,19 +9,19 @@ public class DirectionTest {
   @Test
   public void testGetDirectionBackward() {
     Direction direction = Direction.getDirection(-1);
-    assertEquals(direction, Direction.UP);
+    assertEquals(Direction.UP, direction);
   }
 
   @Test
   public void testGetDirectionForward() {
     Direction direction = Direction.getDirection(1);
-    assertEquals(direction, Direction.DOWN);
+    assertEquals(Direction.DOWN, direction);
   }
 
   @Test
   public void testGetDirectionForwardRollover() {
-    Direction direction = Direction.getDirection(Direction.SIZE);
-    assertEquals(direction, Direction.RIGHT);
+    Direction direction = Direction.getDirection(Direction.LENGTH);
+    assertEquals(Direction.RIGHT, direction);
   }
 
 }
