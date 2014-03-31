@@ -1,80 +1,65 @@
 package com.rallydev;
 
+/**
+ * Class that generates a numeric spiral (starting from the center and moving in a clock-wise
+ * direction).
+ *
+ * Example (input: 20)
+ * <pre>
+ * 20  -  -  -  -
+ * 19  6  7  8  9
+ * 18  5  0  1 10
+ * 17  4  3  2 11
+ * 16 15 14 13 12
+ * </pre>
+ */
 public class NumericSpiral {
+  /**
+   * Creates the cell renderer for each cell value.
+   */
+  private static class CellRenderer extends IntegerCellRenderer {
+    private final String numberFormat;
 
-  // expose at package level for testing
-  static final int MIN_GRID_SIZE = 3;
-  static final int EMPTY_CELL_VALUE = -1;
-  static final String EMPTY_CELL_RENDERER = "-";
-  private static final String NEWLINE = System.getProperty("line.separator");
+    /**
+     * Constructor for {@code CellRenderer}.
+     *
+     * @param paddingSize the left padding size
+     */
+    public CellRenderer(int paddingSize) {
+      this.numberFormat = padLeftFormat(paddingSize);
+    }
+
+    @Override
+    public String render(int value) {
+      return String.format(numberFormat,
+          value == EMPTY_CELL_VALUE ? EMPTY_CELL_RENDERER : value);
+    }
+  }
+
+  public static final int EMPTY_CELL_VALUE = -1;
+  public static final String EMPTY_CELL_RENDERER = "-";
 
   public static void main(String[] args) {
-    // for (int i = 1; i < 101; i+= 10) {
-    System.out.println(new NumericSpiral(110).render());
-    // System.out.println();
-    // }
-  }
-
-  /**
-   * Creates the left-padded number renderer. For use with {@code String.format}.
-   *
-   * @param grid the renderer for
-   * @return the cell formatter
-   */
-  static String createCellRenderer(int maxValue) {
-    int padding = String.valueOf(maxValue).length();
-    return "%1$" + padding + "s";
-  }
-
-  /**
-   * Determines the optimal n by n grid dimensions for a given target while center-aligning the
-   * starting point (i.e. n will always be odd).
-   *
-   * @param target the target value
-   * @return the calculated grid size
-   */
-  static int determineGridSize(int target) {
-    if (target < 0) {
-      throw new IllegalArgumentException("Target value must be greater than or equal to 0");
-    }
-
-    // special case for when we only render a target value of 0
-    if (target == 0) {
-      return 1;
-    }
-
-    int size = Math.max((int) Math.ceil(Math.sqrt(target + 1)), MIN_GRID_SIZE);
-    if (size % 2 == 0) {
-      size++;
-    }
-    return size;
-  }
-
-  static void initialize(int[][] grid, int defaultValue) {
-    if (grid == null) {
-      return;
-    }
-
-    for (int i = 0; i < grid.length; i++) {
-      for (int j = 0; j < grid[i].length; j++) {
-        grid[i][j] = defaultValue;
-      }
+    for (int i = 50; i < 51; i++) {
+//      System.out.println("i: " + i);
+      System.out.println(new NumericSpiral(i).render());
+//      System.out.println();
     }
   }
 
   private final int[][] grid;
-  private final String cellRenderer;
+  private final IntegerCellRenderer cellRenderer;
   private final int target;
   private String display;
 
   public NumericSpiral(int target) {
-    final int size = determineGridSize(target);
+    final int size = GridHelper.determineGridSize(target);
 
     this.grid = new int[size][size];
-    this.cellRenderer = createCellRenderer(target);
+    this.cellRenderer = new CellRenderer(String.valueOf(target).length());
     this.target = target;
 
-    initialize(this.grid, EMPTY_CELL_VALUE);
+    GridHelper.initialize(this.grid, EMPTY_CELL_VALUE);
     populate();
   }
 
@@ -94,24 +79,20 @@ public class NumericSpiral {
 
   @Override
   public int hashCode() {
-    return this.target;
+    int result = 17;
+    result = 31 * result + this.target;
+    return result;
   }
 
+  /**
+   * Renders the numeric spiral.
+   *
+   * @return the rendered grid
+   */
   public String render() {
+    // lazily render
     if (this.display == null) {
-      final StringBuilder sb = new StringBuilder();
-      for (int i = 0; i < grid.length; i++) {
-        for (int j = 0; j < grid[i].length; j++) {
-          if (j > 0) {
-            sb.append(" ");
-          }
-          int value = grid[i][j];
-          sb.append(String.format(cellRenderer,
-              value == EMPTY_CELL_VALUE ? EMPTY_CELL_RENDERER : value));
-        }
-        sb.append(NEWLINE);
-      }
-      this.display = sb.toString();
+      this.display = GridHelper.render(this.grid, this.cellRenderer);
     }
     return this.display;
   }
