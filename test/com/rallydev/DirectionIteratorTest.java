@@ -24,7 +24,7 @@ public class DirectionIteratorTest {
 
   @Test
   public void testHasNext() {
-    for (int i = 0; i < (Direction.SIZE * 2); i++) {
+    for (int i = 0; i < (Direction.LENGTH * 2); i++) {
       iterator.next();
       assertTrue(iterator.hasNext());
     }
@@ -32,7 +32,7 @@ public class DirectionIteratorTest {
 
   @Test
   public void testHasPrevious() {
-    for (int i = 0; i < (Direction.SIZE * 2); i++) {
+    for (int i = 0; i < (Direction.LENGTH * 2); i++) {
       iterator.previous();
       assertTrue(iterator.hasPrevious());
     }

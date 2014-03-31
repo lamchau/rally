@@ -78,7 +78,7 @@ public enum Direction {
 
   // cache directions
   private static final Direction[] VALUES = values();
-  public static final int SIZE = VALUES.length;
+  public static final int LENGTH = VALUES.length;
 
   /**
    * Create a circular (continuous) <code>Direction</code> iterator/generator.
