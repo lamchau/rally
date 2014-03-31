@@ -18,9 +18,10 @@ public class NumericSpiral {
   /**
    * Creates the cell renderer for each cell value.
    */
-  private static class CellRenderer extends IntegerCellRenderer {
-    private final String numberFormat;
+  private class CellRenderer extends IntegerCellRenderer {
+    private static final String EMPTY_CELL_RENDERER = "-";
 
+    private final String numberFormat;
     /**
      * Constructor for {@code CellRenderer}.
      *
@@ -37,8 +38,7 @@ public class NumericSpiral {
     }
   }
 
-  protected static final int EMPTY_CELL_VALUE = -1;
-  protected static final String EMPTY_CELL_RENDERER = "-";
+  private static final int EMPTY_CELL_VALUE = -1;
 
   public static void main(String[] args) {
 //    -  -  -  -  -  -  -
