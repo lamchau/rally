@@ -36,8 +36,6 @@ public class NumericSpiral {
     }
   }
 
-  public static final int EMPTY_CELL_VALUE = -1;
-  public static final String EMPTY_CELL_RENDERER = "-";
   protected static final int EMPTY_CELL_VALUE = -1;
   protected static final String EMPTY_CELL_RENDERER = "-";
 
