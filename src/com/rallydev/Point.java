@@ -125,8 +125,7 @@ public class Point {
    * @return this point
    */
   public Point reset() {
-    set(startX, startY);
-    return this;
+    return set(startX, startY);
   }
 
   /**
@@ -137,9 +136,7 @@ public class Point {
    * @returns this point
    */
   public Point set(int x, int y) {
-    this.setX(x);
-    this.setY(y);
-    return this;
+    return setX(x).setY(y);
   }
 
   /**
