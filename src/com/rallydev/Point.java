@@ -91,8 +91,12 @@ public class Point {
    * @return this point
    */
   public Point move(Direction... directions) {
-    if (directions != null) {
-      for (Direction d : directions) {
+    if (directions == null) {
+      return this;
+    }
+
+    for (Direction d : directions) {
+      if (d != null) {
         switch (d) {
           case RIGHT:
             y++;

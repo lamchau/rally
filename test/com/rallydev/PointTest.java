@@ -56,6 +56,13 @@ public class PointTest {
   }
 
   @Test
+  public void testMoveWithNull() {
+    point.move(Direction.UP, null, Direction.RIGHT);
+    assertEquals(2, point.getX());
+    assertEquals(4, point.getY());
+  }
+
+  @Test
   public void testReset() {
     point.move(Direction.RIGHT, Direction.RIGHT, Direction.RIGHT).reset();
     assertEquals(3, point.getX());
